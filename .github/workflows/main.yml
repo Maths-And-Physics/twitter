@@ -103,7 +103,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ matrix.os }}-{{ matrix.name }}rust
+          key: ${{ matrix.os }}-${{ matrix.name }}
 
       - name: Build release
         shell: bash
