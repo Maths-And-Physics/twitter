@@ -42,7 +42,7 @@ render_always = true
 # Regex postprocessors to replace placeholders with actual URLs
 postprocessors = [
     # Replace <REPO> placeholder with your GitHub repository URL
-    { pattern = '<REPO>', replace = "https://github.com/StanleyMasinde/twitter" },
+    { pattern = '<REPO>', replace = "https://github.com/Maths-And-Physics/twitter" },
 ]
 
 [git]
@@ -115,11 +115,11 @@ filter_commits = false
 # Link parsers for GitHub integration
 link_parsers = [
     # GitHub issues: #123 -> link to issue
-    { pattern = "#(\\d+)", href = "https://github.com/StanleyMasinde/twitter/issues/$1" },
+    { pattern = "#(\\d+)", href = "https://github.com/Maths-And-Physics/twitter/issues/$1" },
     # GitHub PRs: PR#123 -> link to pull request
-    { pattern = "PR#(\\d+)", href = "https://github.com/StanleyMasinde/twitter/pull/$1" },
+    { pattern = "PR#(\\d+)", href = "https://github.com/Maths-And-Physics/twitter/pull/$1" },
     # GitHub commits: commit abc123 -> link to commit
-    { pattern = "commit ([a-f0-9]{7,40})", href = "https://github.com/StanleyMasinde/twitter/commit/$1" },
+    { pattern = "commit ([a-f0-9]{7,40})", href = "https://github.com/Maths-And-Physics/twitter/commit/$1" },
     # GitHub users: @username -> link to user profile
     { pattern = "@([a-zA-Z0-9_-]+)", href = "https://github.com/$1" },
 ]
@@ -137,5 +137,5 @@ recurse_submodules = false
 
 # GitHub-specific settings (uncomment and configure if needed)
 # [remote.github]
-# owner = "StanleyMasinde"
+# owner = "Maths-And-Physics"
 # repo = "twitter"
