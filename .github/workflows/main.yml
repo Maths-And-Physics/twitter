@@ -138,7 +138,7 @@ jobs:
 
   release:
     name: Create release
-    needs: [generate-changelog, build]
+    needs: [changelog, build]
     runs-on: ubuntu-latest
 
     steps:
