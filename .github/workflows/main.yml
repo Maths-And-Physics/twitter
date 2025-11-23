@@ -29,7 +29,7 @@ jobs:
         uses: orhun/git-cliff-action@v4
         id: git-cliff
         with:
-          args: -vv --latest --strip header
+          args: --latest
         env:
           GITHUB_REPO: ${{ github.repository }}
 
