@@ -16,37 +16,26 @@ env:
   BINARY_NAME: twitter
 
 jobs:
-  generate-changelog:
+  changelog:
     name: Generate changelog
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install git-cliff
-        uses: kenji-miyake/setup-git-cliff@v2
-
-      - name: Generate CHANGELOG.md
-        id: changelog
-        shell: bash
-        run: |
-          set -euo pipefail
-          git cliff --latest --output CHANGELOG.md >/dev/null
-          {
-            echo "changelog<<EOF"
-            cat CHANGELOG.md
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Upload changelog artifact
-        uses: actions/upload-artifact@v4
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v4
+        id: git-cliff
         with:
-          name: changelog
-          path: CHANGELOG.md
-          if-no-files-found: error
-          retention-days: 7
+          config: cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
 
   build:
     name: Build ${{ matrix.name }}
@@ -178,7 +167,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
-          body: ${{ steps.get-changelog.outputs.changelog }}
+          body: ${{ steps.git-cliff.outputs.changelog }}
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}
           files: |
