@@ -19,6 +19,8 @@ jobs:
   changelog:
     name: Generate changelog
     runs-on: ubuntu-latest
+    outputs:
+      content: ${{ steps.git-cliff.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -146,27 +148,14 @@ jobs:
         with:
           path: artifacts
 
-      - name: Extract changelog for release body
-        id: get-changelog
-        shell: bash
-        run: |
-          set -euo pipefail
-          CHANGELOG_PATH="artifacts/changelog/CHANGELOG.md"
-          test -f "$CHANGELOG_PATH" || { echo "Missing changelog artifact"; exit 1; }
-          {
-            echo "changelog<<EOF"
-            cat "$CHANGELOG_PATH"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
       - name: List artifacts
-        run: find artifacts -type f -maxdepth 2 -name "*.tar.gz" -print
+        run: find artifacts -type f -maxdepth 2 \( -name "*.tar.gz" -o -name "*.zip" \)
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
-          body: ${{ steps.git-cliff.outputs.changelog }}
+          body: ${{ needs.changelog.outputs.content }}
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}
           files: |
