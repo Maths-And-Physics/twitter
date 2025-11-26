@@ -93,7 +93,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ matrix.os }}-${{ matrix.name }}
+          key: ${{ matrix.os }}-${{ matrix.name }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build release
         shell: bash
