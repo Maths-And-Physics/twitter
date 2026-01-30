@@ -30,9 +30,9 @@ pub async fn show() {
     let token = account.bearer_token.as_str();
     let auth_header = format!("Bearer {}", token);
     let client = reqwest::Client::new();
+    let usage_url = "https://api.x.com/2/usage/tweets?days=1";
     let response = client
-        .get("https://api.x.com/2/usage/tweets")
-        .query(&[("days", 1)])
+        .get(usage_url)
         .header(reqwest::header::AUTHORIZATION, &auth_header)
         .send()
         .await

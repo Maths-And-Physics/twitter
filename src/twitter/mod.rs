@@ -6,7 +6,6 @@ pub mod media;
 pub mod tweet;
 
 pub struct Response<T> {
-    pub status: u16,
     pub content: T,
 }
 

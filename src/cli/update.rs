@@ -80,7 +80,10 @@ pub async fn run() {
 
         pb.inc(bytes.len() as u64);
 
-        let _ = new_file.write_all(&bytes).await;
+        if let Err(err) = new_file.write_all(&bytes).await {
+            eprintln!("Failed to write downloaded file: {err}");
+            process::exit(1)
+        }
     }
 
     let extract_status = match os {

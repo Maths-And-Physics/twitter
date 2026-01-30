@@ -141,10 +141,7 @@ impl<'t> TwitterApi for Tweet<'t> {
             id: 0.to_string(),
         };
         let content = TweetCreateResponse { data: tweet_data };
-        let mut response = Response {
-            status: 200,
-            content,
-        };
+        let mut response = Response { content };
 
         if self.is_thread(&text) {
             let parts = self.split_tweet(&text, &self.separator);
